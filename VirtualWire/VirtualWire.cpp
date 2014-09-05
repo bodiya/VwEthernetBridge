@@ -361,28 +361,28 @@ void vw_setup(uint16_t speed)
 #else // ARDUINO
     // This is the path for most Arduinos
     // figure out prescaler value and counter match value
-    prescaler = _timer_calc(speed, (uint16_t)-1, &nticks);
+    prescaler = _timer_calc(speed, (uint8_t)-1, &nticks);
     if (!prescaler)
     {
         return; // fault
     }
 
-    TCCR1A = 0; // Output Compare pins disconnected
-    TCCR1B = _BV(WGM12); // Turn on CTC mode
+    TCCR2A = 0;
+    TCCR2A = _BV(WGM01); // Turn on CTC mode / Output Compare pins disconnected
 
-    // convert prescaler index to TCCRnB prescaler bits CS10, CS11, CS12
-    TCCR1B |= prescaler;
+    // convert prescaler index to TCCRnB prescaler bits CS00, CS01, CS02
+    TCCR2B = 0;
+    TCCR2B = prescaler; // set CS00, CS01, CS02 (other bits not needed)
 
-    // Caution: special procedures for setting 16 bit regs
-    // is handled by the compiler
-    OCR1A = nticks;
+    // Number of ticks to count before firing interrupt
+    OCR2A = uint8_t(nticks);
     // Enable interrupt
-#ifdef TIMSK1
+#ifdef TIMSK2
     // atmega168
-    TIMSK1 |= _BV(OCIE1A);
+    TIMSK2 |= _BV(OCIE2A);
 #else
     // others
-    TIMSK |= _BV(OCIE1A);
+    TIMSK |= _BV(OCIE2A);
 #endif // TIMSK1
 
 #endif // __AVR_ATtiny85__
@@ -565,7 +565,7 @@ uint8_t vw_get_message(uint8_t* buf, uint8_t* len)
 SIGNAL(TIM0_COMPA_vect)
 #else // Assume Arduino Uno (328p or similar)
 
-SIGNAL(TIMER1_COMPA_vect)
+SIGNAL(TIMER2_COMPA_vect)
 #endif // __AVR_ATtiny85__
 
 {
