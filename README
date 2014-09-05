@@ -1,0 +1,5 @@
+This sketch allows you to forward data from a wireless sensor to the
+internet via the Ethernet Shield on the Arduino Uno. This concept is
+the basis for more interesting projects like the Home Sensors project.
+
+A simple transmitter is also included.
