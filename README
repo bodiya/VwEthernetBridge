@@ -4,8 +4,12 @@ the basis for more interesting activities like the Home Sensors project.
 
 A simple transmitter (for use with a Digispark) is also included.
 
+I recommend using netcat to test things out before attempting to write any
+code to receive data from the Uno.
+
 A modified copy of the VirtualWire library is included, which allows it to
 be used at the same time as the Ethernet Shield for the Uno. You can see the
 changes that were applied by looking at the latest diff in the VirtualWire.cpp
 file. To download the latest (unmodified) version of VirtualWire, go to:
 http://www.airspayce.com/mikem/arduino/VirtualWire/
+
