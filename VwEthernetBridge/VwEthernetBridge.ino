@@ -36,8 +36,7 @@ IPAddress ip(192, 168, 1, 177);
 unsigned int local_port = 8888;      // local port to listen on
 
 // This is the address and the base port to forward RF messages to
-***REMOVED***
-***REMOVED***
+IPAddress remoteIp(192, 168, 1, 100);
 unsigned int remote_port = 6780;         // base port to send to
 
 EthernetUDP Udp;
